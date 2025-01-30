@@ -37,36 +37,40 @@ function bfc_activate_plugin() {
 
 // Enqueue scripts and styles
 function bfc_enqueue_scripts() {
-    // Get the plugin directory URL
-    $plugin_url = plugin_dir_url(__FILE__);
+    // Get the plugin directory URL using plugins_url() for better compatibility
+    $plugin_url = plugins_url('', __FILE__);
     
-    // Enqueue the CSS file
+    // Enqueue the CSS file with version parameter for cache busting
     wp_enqueue_style(
         'bfc-styles',
-        $plugin_url . 'dist/assets/index--YhE6_Iv.css',
+        $plugin_url . '/dist/assets/index--YhE6_Iv.css',
         array(),
-        '1.0.0'
+        filemtime(plugin_dir_path(__FILE__) . 'dist/assets/index--YhE6_Iv.css')
     );
     
-    // Enqueue the JS file
+    // Enqueue the JS file with version parameter for cache busting
     wp_enqueue_script(
         'bfc-scripts',
-        $plugin_url . 'dist/assets/index-Bf2SU-iZ.js',
+        $plugin_url . '/dist/assets/index-Bf2SU-iZ.js',
         array(),
-        '1.0.0',
+        filemtime(plugin_dir_path(__FILE__) . 'dist/assets/index-Bf2SU-iZ.js'),
         true
     );
 
-    // Add dynamic base URL for assets
-    wp_add_inline_script('bfc-scripts', 'window.bfcBaseUrl = "' . $plugin_url . '";', 'before');
+    // Add dynamic base URL for assets using wp_localize_script
+    wp_localize_script('bfc-scripts', 'bfcData', array(
+        'baseUrl' => $plugin_url,
+        'siteUrl' => get_site_url(),
+        'ajaxUrl' => admin_url('admin-ajax.php')
+    ));
 }
 add_action('wp_enqueue_scripts', 'bfc_enqueue_scripts');
 
-// Register shortcode
+// Register shortcode with a unique div ID
 function bfc_shortcode() {
     ob_start();
     ?>
-    <div id="root"></div>
+    <div id="blox-fruits-calculator-root"></div>
     <?php
     return ob_get_clean();
 }
