@@ -37,40 +37,36 @@ function bfc_activate_plugin() {
 
 // Enqueue scripts and styles
 function bfc_enqueue_scripts() {
-    // Get the plugin directory URL using plugins_url() for better compatibility
-    $plugin_url = plugins_url('', __FILE__);
+    // Get the plugin directory URL
+    $plugin_url = plugin_dir_url(__FILE__);
     
-    // Enqueue the CSS file with version parameter for cache busting
+    // Enqueue the CSS file
     wp_enqueue_style(
         'bfc-styles',
-        $plugin_url . '/dist/assets/index--YhE6_Iv.css',
+        $plugin_url . 'dist/assets/index--YhE6_Iv.css',
         array(),
-        filemtime(plugin_dir_path(__FILE__) . 'dist/assets/index--YhE6_Iv.css')
+        '1.0.0'
     );
     
-    // Enqueue the JS file with version parameter for cache busting
+    // Enqueue the JS file
     wp_enqueue_script(
         'bfc-scripts',
-        $plugin_url . '/dist/assets/index-Bf2SU-iZ.js',
+        $plugin_url . 'dist/assets/index-Bf2SU-iZ.js',
         array(),
-        filemtime(plugin_dir_path(__FILE__) . 'dist/assets/index-Bf2SU-iZ.js'),
+        '1.0.0',
         true
     );
 
-    // Add dynamic base URL for assets using wp_localize_script
-    wp_localize_script('bfc-scripts', 'bfcData', array(
-        'baseUrl' => $plugin_url,
-        'siteUrl' => get_site_url(),
-        'ajaxUrl' => admin_url('admin-ajax.php')
-    ));
+    // Add dynamic base URL for assets
+    wp_add_inline_script('bfc-scripts', 'window.bfcBaseUrl = "' . $plugin_url . '";', 'before');
 }
 add_action('wp_enqueue_scripts', 'bfc_enqueue_scripts');
 
-// Register shortcode with a unique div ID
+// Register shortcode
 function bfc_shortcode() {
     ob_start();
     ?>
-    <div id="blox-fruits-calculator-root"></div>
+    <div id="root"></div>
     <?php
     return ob_get_clean();
 }
