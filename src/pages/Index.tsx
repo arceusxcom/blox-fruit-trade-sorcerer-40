@@ -116,6 +116,10 @@ const Index = () => {
     <div className="min-h-screen p-4 md:p-8">
       <div className="w-full space-y-8">
         <div className="text-center space-y-2">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 text-transparent bg-clip-text">
+            Blox Fruit Calculator
+          </h1>
+          <p className="text-white/60">Calculate and compare fruit trades with ease</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">

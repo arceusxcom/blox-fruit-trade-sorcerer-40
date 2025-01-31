@@ -1,29 +1,69 @@
-# Blox Fruits Calculator WordPress Plugin
+# Welcome to your Lovable project
 
-A WordPress plugin that adds a Blox Fruits trading calculator to your website.
+## Project info
 
-## Installation
+**URL**: https://lovable.dev/projects/8da6e21c-c328-4f7d-9f4c-5571faa6f2b4
 
-1. Download the plugin zip file
-2. Log in to your WordPress admin panel
-3. Go to Plugins > Add New
-4. Click "Upload Plugin"
-5. Choose the downloaded zip file
-6. Click "Install Now"
-7. After installation, click "Activate"
+## How can I edit this code?
 
-## Usage
+There are several ways of editing your application.
 
-1. Add the shortcode `[blox_fruits_calculator]` to any page or post where you want the calculator to appear
-2. The calculator will work with any permalink structure
-3. You can manage the plugin from the "Blox Calculator" menu in your WordPress admin panel
+**Use Lovable**
 
-## Adding New Fruits
+Simply visit the [Lovable Project](https://lovable.dev/projects/8da6e21c-c328-4f7d-9f4c-5571faa6f2b4) and start prompting.
 
-1. Place new fruit images in the `/wp-content/uploads/fruits/` directory
-2. Images should be in WebP format
-3. Image names should match the fruit names exactly (case-sensitive) with .webp extension
+Changes made via Lovable will be committed automatically to this repo.
 
-## Support
+**Use your preferred IDE**
 
-For support or questions, please visit the plugin's documentation or contact support.
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+Follow these steps:
+
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
+
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
+
+# Step 3: Install the necessary dependencies.
+npm i
+
+# Step 4: Start the development server with auto-reloading and an instant preview.
+npm run dev
+```
+
+**Edit a file directly in GitHub**
+
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
+
+**Use GitHub Codespaces**
+
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
+
+## What technologies are used for this project?
+
+This project is built with .
+
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
+
+## How can I deploy this project?
+
+Simply open [Lovable](https://lovable.dev/projects/8da6e21c-c328-4f7d-9f4c-5571faa6f2b4) and click on Share -> Publish.
+
+## I want to use a custom domain - is that possible?
+
+We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
