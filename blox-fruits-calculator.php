@@ -37,28 +37,43 @@ function bfc_activate_plugin() {
 
 // Enqueue scripts and styles
 function bfc_enqueue_scripts() {
-    // Get the plugin directory URL
-    $plugin_url = plugin_dir_url(__FILE__);
-    
-    // Enqueue the CSS file
-    wp_enqueue_style(
-        'bfc-styles',
-        $plugin_url . 'dist/assets/index--YhE6_Iv.css',
-        array(),
-        '1.0.0'
-    );
-    
-    // Enqueue the JS file
-    wp_enqueue_script(
-        'bfc-scripts',
-        $plugin_url . 'dist/assets/index-Bf2SU-iZ.js',
-        array(),
-        '1.0.0',
-        true
-    );
+    if (!is_admin()) {
+        // Get the plugin directory URL
+        $plugin_url = plugin_dir_url(__FILE__);
+        $plugin_dir = plugin_dir_path(__FILE__);
+        
+        // Get file modification time for versioning
+        $css_ver = filemtime($plugin_dir . 'dist/assets/index.css');
+        $js_ver = filemtime($plugin_dir . 'dist/assets/index.js');
+        
+        // Enqueue WordPress's React (wp-element)
+        wp_enqueue_script('wp-element');
+        
+        // Enqueue the CSS file
+        wp_enqueue_style(
+            'bfc-styles',
+            $plugin_url . 'dist/assets/index.css',
+            array(),
+            $css_ver
+        );
+        
+        // Enqueue the JS file
+        wp_enqueue_script(
+            'bfc-scripts',
+            $plugin_url . 'dist/assets/index.js',
+            array('wp-element'),
+            $js_ver,
+            true
+        );
 
-    // Add dynamic base URL for assets
-    wp_add_inline_script('bfc-scripts', 'window.bfcBaseUrl = "' . $plugin_url . '";', 'before');
+        // Localize the script with site data
+        wp_localize_script('bfc-scripts', 'bfcData', array(
+            'siteUrl' => get_site_url(),
+            'baseUrl' => $plugin_url,
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('bfc_nonce')
+        ));
+    }
 }
 add_action('wp_enqueue_scripts', 'bfc_enqueue_scripts');
 
@@ -66,7 +81,7 @@ add_action('wp_enqueue_scripts', 'bfc_enqueue_scripts');
 function bfc_shortcode() {
     ob_start();
     ?>
-    <div id="root"></div>
+    <div id="blox-fruits-calculator"></div>
     <?php
     return ob_get_clean();
 }
