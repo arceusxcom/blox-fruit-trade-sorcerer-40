@@ -67,6 +67,8 @@ function bfc_enqueue_scripts() {
     // Localize script with necessary data
     wp_localize_script('bfc-scripts', 'bfcData', array(
         'pluginUrl' => $plugin_url,
+        'siteUrl' => get_site_url(),
+        'currentPage' => get_permalink(),
         'ajaxUrl' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('bfc_nonce')
     ));
@@ -77,7 +79,7 @@ add_action('wp_enqueue_scripts', 'bfc_enqueue_scripts');
 function bfc_shortcode() {
     ob_start();
     ?>
-    <div id="blox-fruits-calculator-root"></div>
+    <div id="blox-fruits-calculator-root" data-page-url="<?php echo esc_attr(get_permalink()); ?>"></div>
     <?php
     return ob_get_clean();
 }
