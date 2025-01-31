@@ -38,40 +38,27 @@ function bfc_activate_plugin() {
 // Enqueue scripts and styles
 function bfc_enqueue_scripts() {
     // Get the plugin directory URL
-    $plugin_url = plugins_url('', __FILE__);
+    $plugin_url = plugin_dir_url(__FILE__);
     
-    // Get file paths for versioning
-    $css_file = plugin_dir_path(__FILE__) . 'dist/assets/index.css';
-    $js_file = plugin_dir_path(__FILE__) . 'dist/assets/index.js';
-    
-    // Enqueue the CSS file with version parameter
+    // Enqueue the CSS file
     wp_enqueue_style(
         'bfc-styles',
-        $plugin_url . '/dist/assets/index.css',
+        $plugin_url . 'dist/assets/index--YhE6_Iv.css',
         array(),
-        file_exists($css_file) ? filemtime($css_file) : '1.0.0'
+        '1.0.0'
     );
     
-    // Enqueue React and ReactDOM from WordPress
-    wp_enqueue_script('wp-element');
-    
-    // Enqueue the JS file with version parameter
+    // Enqueue the JS file
     wp_enqueue_script(
         'bfc-scripts',
-        $plugin_url . '/dist/assets/index.js',
-        array('wp-element'),
-        file_exists($js_file) ? filemtime($js_file) : '1.0.0',
+        $plugin_url . 'dist/assets/index-Bf2SU-iZ.js',
+        array(),
+        '1.0.0',
         true
     );
 
-    // Localize script with necessary data
-    wp_localize_script('bfc-scripts', 'bfcData', array(
-        'pluginUrl' => $plugin_url,
-        'siteUrl' => get_site_url(),
-        'currentPage' => get_permalink(),
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('bfc_nonce')
-    ));
+    // Add dynamic base URL for assets
+    wp_add_inline_script('bfc-scripts', 'window.bfcBaseUrl = "' . $plugin_url . '";', 'before');
 }
 add_action('wp_enqueue_scripts', 'bfc_enqueue_scripts');
 
@@ -79,7 +66,7 @@ add_action('wp_enqueue_scripts', 'bfc_enqueue_scripts');
 function bfc_shortcode() {
     ob_start();
     ?>
-    <div id="blox-fruits-calculator-root" data-page-url="<?php echo esc_attr(get_permalink()); ?>"></div>
+    <div id="root"></div>
     <?php
     return ob_get_clean();
 }
