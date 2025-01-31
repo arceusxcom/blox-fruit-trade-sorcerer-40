@@ -40,20 +40,27 @@ function bfc_enqueue_scripts() {
     // Get the plugin directory URL
     $plugin_url = plugins_url('', __FILE__);
     
+    // Get file paths for versioning
+    $css_file = plugin_dir_path(__FILE__) . 'dist/assets/index--YhE6_Iv.css';
+    $js_file = plugin_dir_path(__FILE__) . 'dist/assets/index-Bf2SU-iZ.js';
+    
     // Enqueue the CSS file with version parameter
     wp_enqueue_style(
         'bfc-styles',
         $plugin_url . '/dist/assets/index--YhE6_Iv.css',
         array(),
-        filemtime(plugin_dir_path(__FILE__) . 'dist/assets/index--YhE6_Iv.css')
+        file_exists($css_file) ? filemtime($css_file) : '1.0.0'
     );
+    
+    // Enqueue React and ReactDOM from WordPress
+    wp_enqueue_script('wp-element');
     
     // Enqueue the JS file with version parameter
     wp_enqueue_script(
         'bfc-scripts',
         $plugin_url . '/dist/assets/index-Bf2SU-iZ.js',
         array('wp-element'),
-        filemtime(plugin_dir_path(__FILE__) . 'dist/assets/index-Bf2SU-iZ.js'),
+        file_exists($js_file) ? filemtime($js_file) : '1.0.0',
         true
     );
 

@@ -4,12 +4,16 @@ import './index.css'
 
 // Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', () => {
+  // Find the root element
   const rootElement = document.getElementById("blox-fruits-calculator-root");
   
   if (rootElement) {
     try {
-      const root = createRoot(rootElement);
-      root.render(<App />);
+      // Check if React is already rendered to this container
+      if (!rootElement.hasChildNodes()) {
+        const root = createRoot(rootElement);
+        root.render(<App />);
+      }
     } catch (error) {
       console.error('Failed to initialize Blox Fruits Calculator:', error);
     }
