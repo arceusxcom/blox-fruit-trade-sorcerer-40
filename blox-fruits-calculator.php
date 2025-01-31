@@ -41,13 +41,13 @@ function bfc_enqueue_scripts() {
     $plugin_url = plugins_url('', __FILE__);
     
     // Get file paths for versioning
-    $css_file = plugin_dir_path(__FILE__) . 'dist/assets/index--YhE6_Iv.css';
-    $js_file = plugin_dir_path(__FILE__) . 'dist/assets/index-Bf2SU-iZ.js';
+    $css_file = plugin_dir_path(__FILE__) . 'dist/assets/index.css';
+    $js_file = plugin_dir_path(__FILE__) . 'dist/assets/index.js';
     
     // Enqueue the CSS file with version parameter
     wp_enqueue_style(
         'bfc-styles',
-        $plugin_url . '/dist/assets/index--YhE6_Iv.css',
+        $plugin_url . '/dist/assets/index.css',
         array(),
         file_exists($css_file) ? filemtime($css_file) : '1.0.0'
     );
@@ -58,7 +58,7 @@ function bfc_enqueue_scripts() {
     // Enqueue the JS file with version parameter
     wp_enqueue_script(
         'bfc-scripts',
-        $plugin_url . '/dist/assets/index-Bf2SU-iZ.js',
+        $plugin_url . '/dist/assets/index.js',
         array('wp-element'),
         file_exists($js_file) ? filemtime($js_file) : '1.0.0',
         true
